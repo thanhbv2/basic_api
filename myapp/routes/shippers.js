@@ -28,6 +28,34 @@ router.get('/shippers/:id', async (req, res, next) => {
 })
 
 
+router.post('/shippers', async (req, res, next) => {
+  const data = req.body;
+  // validation cho data
+  try {
+    // insert into shippers values (,); 
+    const response = await db.Shipper.create(data);
+    if (response) {
+      res.status(200).json({ httpCode: 200, result: response })
+    }
+  } catch (error) {
+    throw Error(error.message)
+  }
+})
+
+router.delete('/shippers/:shipperId', async (req, res, next) => {
+  const { shipperId } = req.params;
+  console.log('===============>re', req.params);
+
+  try {
+    const response = await db.Shipper.destroy({ where: { id: shipperId } })
+    console.log('===============>', response);
+    res.status(200).json({ httpCode: 200, message: "xoa thanh cong" });
+  } catch (error) {
+    throw Error(error.message)
+  }
+})
+
+
 
 
 module.exports = router;
