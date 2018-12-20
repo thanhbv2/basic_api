@@ -2,6 +2,14 @@ var express = require('express');
 const app = express();
 const db = require('../models');
 
+
+// // raw query
+// const sequelize = db.sequelize;
+// sequelize.query('select * from users limit 20').then(result => {
+//   console.log('===============>', result);
+// })
+
+
 app.get('/users', async (req, res, next) => {
   try {
     const query = req.query; // Lấy thông tin query trên url
