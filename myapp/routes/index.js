@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const usersRoute = require('./users');
+const shipperRoute = require('./shippers');
 /* GET home page. */
-router.use('/', usersRoute)
+router.use('/', shipperRoute)
 
 
 module.exports = router;

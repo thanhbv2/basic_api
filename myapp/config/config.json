@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "123",
-    "database": "auth_service",
+    "database": "techmaster",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "port": 5433,
