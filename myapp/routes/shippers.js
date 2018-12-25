@@ -27,13 +27,14 @@ router.get('/shippers/:id', async (req, res, next) => {
   }
 })
 
-router.put('/shippers', async (req, res, next) => {
+router.put('/shippers/:shipperId', async (req, res, next) => {
   const data = req.body;
+  const id = req.params.shipperId;
   const test = '';
   console.log('===============>', data);
-  // Select * from shipper where name = data.name;
+  // Select * from shipper where id = id;
   try {
-    const shipper = await db.Shipper.findOne({ where: { name: data.name } })
+    const shipper = await db.Shipper.findOne({ where: { id: Number(id) } })
     if (!shipper) {
       return res.status(400).json({ httpCode: 400, message: 'Shipper khong ton tai trong he thong', name: "UPDATE_SHIPPER_ERROR" })
     }
@@ -50,6 +51,7 @@ router.put('/shippers', async (req, res, next) => {
     const response = await db.Shipper.update(data, { where: { name: data.name }, returning: true });
     if (response)
       res.status(200).json({ response, httpCode: 200 })
+    else next();  
   } catch (error) {
     throw Error(error.message)
   }
