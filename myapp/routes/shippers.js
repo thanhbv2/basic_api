@@ -113,8 +113,9 @@ function validateData(data) {
   }
 
   // // Kiem tra nam co bi trung hay khong
-  if (isValidName(data.name)) {
-
+  if (!isValidName(data.name)) {
+    result.status = false;
+    result.failures.push({ field: 'name', message: 'Name khong duoc chua ky tu dac biet' })
 
   }
 
@@ -140,8 +141,17 @@ async function isValidEmail(email) {
   }
 
 }
-function isValidName() {
-
+function isValidName(name) {
+  name = name.toLowercase()
+  try {
+    const nameRegex = /[*[!@#$&*]/;
+    if (!nameRegex.test(name)) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    throw Error(error.message);
+  }
 }
 
 
