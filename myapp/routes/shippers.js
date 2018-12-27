@@ -1,5 +1,3 @@
-import { emit } from 'cluster';
-
 var express = require('express');
 const db = require('../models');
 // const app = express();
@@ -108,12 +106,15 @@ function validateData(data) {
 
 
   // Kiem tra email dung dinh dang va co ton tai trong he thong hay khong
-  if (isValidEmail(email)) {
-//
+  if (!isValidEmail(data.email)) {
+    //
+    result.status = false;
+    result.failures.push({ field: 'email', message: 'Email da ton tai' })
   }
 
   // // Kiem tra nam co bi trung hay khong
-  if (isValidName()) {
+  if (isValidName(data.name)) {
+
 
   }
 
@@ -125,7 +126,7 @@ function validateData(data) {
 
 async function isValidEmail(email) {
   try {
-    const response = await db.Shipper.findOne({ where: email });
+    const response = await db.Shipper.findOne({ where: { email } });
     if (response) {
       return false;
     }
@@ -139,7 +140,9 @@ async function isValidEmail(email) {
   }
 
 }
-function isValidName() { }
+function isValidName() {
+
+}
 
 
 module.exports = router;
