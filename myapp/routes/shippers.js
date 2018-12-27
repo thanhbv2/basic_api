@@ -31,7 +31,6 @@ router.put('/shippers/:shipperId', async (req, res, next) => {
   const data = req.body;
   const id = req.params.shipperId;
   const test = '';
-  console.log('===============>', data);
   // Select * from shipper where id = id;
   try {
     const shipper = await db.Shipper.findOne({ where: { id: Number(id) } })
@@ -74,11 +73,8 @@ router.post('/shippers', async (req, res, next) => {
 
 router.delete('/shippers/:shipperId', async (req, res, next) => {
   const { shipperId } = req.params;
-  console.log('===============>re', req.params);
-
   try {
     const response = await db.Shipper.destroy({ where: { id: shipperId } })
-    console.log('===============>', response);
     res.status(200).json({ httpCode: 200, message: "xoa thanh cong" });
   } catch (error) {
     throw Error(error.message)
@@ -103,8 +99,6 @@ function validateData(data) {
       result.failures.push({ field: pro.field, message: `Please input ${pro.title}` });
     }
   })
-
-
   // Kiem tra email dung dinh dang va co ton tai trong he thong hay khong
   if (!isValidEmail(data.email)) {
     //
@@ -118,10 +112,6 @@ function validateData(data) {
     result.failures.push({ field: 'name', message: 'Name khong duoc chua ky tu dac biet' })
 
   }
-
-
-
-
   return result;
 }
 
