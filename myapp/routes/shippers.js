@@ -1,3 +1,5 @@
+import { emit } from 'cluster';
+
 var express = require('express');
 const db = require('../models');
 // const app = express();
@@ -51,7 +53,7 @@ router.put('/shippers/:shipperId', async (req, res, next) => {
     const response = await db.Shipper.update(data, { where: { name: data.name }, returning: true });
     if (response)
       res.status(200).json({ response, httpCode: 200 })
-    else next();  
+    else next();
   } catch (error) {
     throw Error(error.message)
   }
@@ -106,8 +108,8 @@ function validateData(data) {
 
 
   // Kiem tra email dung dinh dang va co ton tai trong he thong hay khong
-  if (isValidEmail()) {
-
+  if (isValidEmail(email)) {
+//
   }
 
   // // Kiem tra nam co bi trung hay khong
@@ -121,7 +123,22 @@ function validateData(data) {
   return result;
 }
 
-function isValidEmail() { }
+async function isValidEmail(email) {
+  try {
+    const response = await db.Shipper.findOne({ where: email });
+    if (response) {
+      return false;
+    }
+    const emailRegex = /^[\w\.+@[\w+\.]+/;
+    if (!emailRegex.test(email)) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    throw Error(error.message);
+  }
+
+}
 function isValidName() { }
 
 
