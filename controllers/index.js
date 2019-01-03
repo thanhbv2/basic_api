@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
-const shipperRoute = require('./shippers');
-/* GET home page. */
-router.use('/', shipperRoute)
+const express = require('express');
+const app = express();
+const router = express.Router();
+const ShipperRoute = require('./shippers');
 
+app.use('/', ShipperRoute.getInstance().registerRoute(router));
 
 module.exports = router;
