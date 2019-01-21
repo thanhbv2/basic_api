@@ -1,0 +1,28 @@
+version: '3'
+services:
+  auth_service: 
+    image: shippo.auth.dev
+    container_name: shippo_auth
+    build: 
+      context: .
+      args: 
+        - NODE_ENV=development
+    volumes:
+        - ./:/src/data
+    ports:
+      - 8011:8011
+    environment:
+      - NODE_ENV=development
+    restart: always
+
+  db: 
+    image: postgres
+    container_name: shippo_db
+    ports: 
+      - 5433:5432
+    volumes:
+      - ./postgres:/var/lib/postgres/
+    environment:
+       POSTGRES_PASSWORD: "123"
+networks: 
+  test: 
