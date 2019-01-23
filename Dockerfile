@@ -6,7 +6,7 @@ WORKDIR /src/app
 
 COPY ./myapp/package*.json ./
 
-RUN npm install \
+RUN npm install --no-cache=true\
  && mkdir /src/logs
 
 COPY ./myapp /src/app
